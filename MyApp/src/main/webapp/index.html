@@ -17,6 +17,18 @@
 		<div id="pmd-page">
 
 		<header id="pmd-header-section" class="sticky-banner">
+			<div class="container">
+				<div class="nav-header">
+					<a href="#" class="js-pmd-nav-toggle pmd-nav-toggle dark"><i></i></a>
+					<h1 id="pmd-logo"><a href="index.html">#Healthyme</a></h1>
+					<!-- START #pmd-menu-wrap -->
+					<nav id="pmd-menu-wrap" role="navigation" class="hidden">
+						<ul class="sf-menu" id="pmd-primary-menu">
+							<li><a href="index.html">Logout</a></li>
+						</ul>
+					</nav>
+				</div>
+				</div>
 		</header>
 
 		<!-- end:header-top -->
@@ -101,7 +113,7 @@
 												</div>
 											</div>
 											<div class="col-xs-12">
-												<input type="submit" class="btn btn-primary btn-block" value="Login">
+												<input type="button" class="btn btn-primary btn-block" value="Login" id="vendorLoginSubmit">
 											</div>
 										</div>
 									 </div>
@@ -130,16 +142,16 @@
 									<fieldset>
 										<input type="hidden" id="empID"/>
 										<div class="row">
-											<div class="col-md-6 col-xs-12 mt">
+											<div class="col-md-12 col-xs-12 mt">
 												<div class="input-field">
 													<input type="text" class="form-control" id="fname" placeholder="Enter first name." required/>
 												</div>
 											</div>
-											<div class="col-md-6 col-xs-12 mt">
+											<!-- <div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
-													<input type="text" class="form-control" id="lname" placeholder="Enter last name." required/>
+													<input type="text" class="form-control hidden" id="lname" placeholder="Enter last name." required/>
 												</div>
-											</div>
+											</div>-->
 											<div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
 													<input type="tel" class="form-control" id="phone-no" placeholder="Enter contact No." required/>
@@ -161,17 +173,17 @@
 											</div>
 											<div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
-													<input type="number" class="form-control" id="age" placeholder="Enter your age." required/>
+													<input type="text" class="form-control" id="age" placeholder="Enter your age." required/>
 												</div>
 											</div>
 											<div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
-													<input type="number" class="form-control" id="weight" placeholder="Enter weight in kg." required/>
+													<input type="text" class="form-control" id="weight" placeholder="Enter weight in kg." required/>
 												</div>
 											</div>
 											<div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
-													<input type="number" class="form-control" id="height" placeholder="Enter height in cm." required/>
+													<input type="text" class="form-control" id="height" placeholder="Enter height in cm." required/>
 												</div>
 											</div>
 											
@@ -299,8 +311,7 @@
 					
 					
 					
-								<div class="tabulation animate-box hidden" id="dietplanModal" style="color: gray; margin: 20px auto;   float: none; height: 550px;
-    padding: 20px;">
+								<div class="tabulation animate-box hidden" id="dietplanModal" style="    color: gray;    margin: -70px auto;    float: none;    height: 800px;    padding: 20px;">
 								
 											<div class="col-md-6 col-xs-12 mt">
 												<div class="input-field">
@@ -345,31 +356,31 @@
 											</tr>
 										  </thead>
 										  <tbody>
-											<tr id="day-1">
+											<tr id="day-1-plan">
 											  <th scope="row">DAY-1</th>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											</tr>
-											<tr id="day-2">
+											<tr id="day-2-plan">
 											  <th scope="row">DAY-2</th>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											</tr>
-											<tr id="day-3">
+											<tr id="day-3-plan">
 											  <th scope="row">DAY-3</th>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											</tr>
-											<tr id="day-4">
+											<tr id="day-4-plan">
 											  <th scope="row">DAY-4</th>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											</tr>
-											<tr id="day-5">
+											<tr id="day-5-plan">
 											  <th scope="row">DAY-5</th>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
 											  <td><input type="text" class="form-control" placeholder=""/></td>
@@ -377,14 +388,16 @@
 											</tr>
 										  </tbody>
 										</table>
+										
+										
 									 </div>
 
 									 <div role="tabpanel" class="tab-pane" id="consult-history-1">
 									 	<div class="row" id="consult-history-content">
 											<div class="col-xxs-12 col-xs-12 mt">	<div class="input-field">
-											<input type="text" class="form-control" placeholder="Date"/></div>	</div>	
+											<input type="text" class="form-control" placeholder="Date" id="enter-date"/></div>	</div>	
 											<div class="col-xxs-12 col-xs-12 mt"><div class="input-field">				
-											<input type="text" class="form-control" placeholder="Name"/></div>
+											<input type="text" class="form-control" placeholder="Name" id="enter-name"/></div>
 											</div>
 											<div class="col-md-12 col-xs-12 mt">
 												<h4>Enter comments:</h4>
@@ -395,6 +408,13 @@
 											
 											
 										</div>
+										<h5 style="text-decoration:underline">Previous Consultation History:</h5>
+										<div class="row" id="consult-history-content-diet">
+											
+											
+										</div>
+										
+										
 									 </div>
 
 									 <div role="tabpanel" class="tab-pane" id="vendorLogin">
@@ -412,7 +432,118 @@
 									 
 									</div>
 
-								</div>
+									</div>
+									
+									<div class="col-xs-12">
+												<input type="button" class="btn btn-primary btn-block" value="Update" id="saveDietChart">
+									</div>
+							</div>
+						</div><!--  END: dietician -->
+						
+						<div class="tabulation animate-box hidden" id="dietplanModal-vendor" style="    color: gray;    margin: -70px auto;    float: none;    height: 700px;    padding: 20px;">
+								
+											<div class="col-md-6 col-xs-12 mt">
+												<div class="input-field">
+													<label>Employee ID: <span id="emp-id-dyna-vendor"></span></label>
+												</div>
+											</div>
+											<div class="col-md-6 col-xs-12 mt">
+												<div class="input-field">
+													<label>Employee Name: <span id="emp-name-dyna-vendor"></span></label>
+												</div>
+											</div>
+											<div class="col-xxs-12 col-xs-12 mt">
+												<div class="input-field">
+													<label>Employee Activity: <span id="emp-activity-dyna-vendor"></span></label>
+												</div>
+											</div>
+											
+											<!-- Nav tabs -->
+											<div id = "planChart">
+								   <ul class="nav nav-tabs" role="tablist">
+								      <li role="presentation" class="active">
+								      	<a href="#diet-plan-1-vendor" aria-controls="diet-plan-1" role="tab" data-toggle="tab" id="load-plan-vendor">Diet Plan</a>
+								      </li>
+								   </ul>
+
+								   <!-- Tab panes -->
+									<div class="tab-content">
+									 <div role="tabpanel" class="tab-pane active" id="diet-plan-1-vendor">
+										<h4 id="plan-status">Employee's 5 day diet chart suggestion.</h4>
+
+
+									 <table class="table" style="    color: gray;">
+										  <thead class="thead-default">
+											<tr>
+											  <th>#</th>
+											  <th>Breakfast</th>
+											  <th>Lunch</th>
+											  <th>Dinner</th>
+											  <th>Estimated cost</th>
+											</tr>
+										  </thead>
+										  <tbody>
+											<tr id="day-1-plan-vendor">
+											  <th scope="row">DAY-1</th>
+											  <td></td>
+											  <td></td>
+											  <td></td>
+											  <td style="width: 20%;"><input type="text" class="form-control" placeholder=""/></td>
+											</tr>
+											<tr id="day-2-plan-vendor">
+											  <th scope="row">DAY-2</th>
+											  <td></td>
+											  <td></td>
+											  <td></td>
+											  <td style="width: 20%;"><input type="text" class="form-control" placeholder=""/></td>
+											</tr>
+											<tr id="day-3-plan-vendor">
+											  <th scope="row">DAY-3</th>
+											  <td></td>
+											  <td></td>
+											  <td></td>
+											  <td style="width: 20%;"><input type="text" class="form-control" placeholder=""/></td>
+											</tr>
+											<tr id="day-4-plan-vendor">
+											  <th scope="row">DAY-4</th>
+											  <td></td>
+											  <td></td>
+											  <td></td>
+											  <td style="width: 20%;"><input type="text" class="form-control" placeholder=""/></td>
+											</tr>
+											<tr id="day-5-plan-vendor">
+											  <th scope="row">DAY-5</th>
+											  <td></td>
+											  <td></td>
+											  <td></td>
+											  <td style="width: 20%;"><input type="text" class="form-control" placeholder=""/></td>
+											</tr>
+										  </tbody>
+										</table>
+										
+										<div class="col-xs-12"><input type="button" class="btn btn-primary btn-block" id="costSubmit" value="Update"/>
+										</div>
+										
+									 </div>
+
+									 
+
+									 <div role="tabpanel" class="tab-pane" id="vendorLogin">
+									 	<div class="row">
+											<div class="col-xxs-12 col-xs-12 mt">
+												<div class="input-field">
+													<label for="vendorID">Service ID:</label>
+													<input type="text" class="form-control" id="vendorID" placeholder=""/>
+												</div>
+											</div>
+											
+										</div>
+									 
+									</div>
+
+									
+									
+									
 							</div>
 						</div>
 

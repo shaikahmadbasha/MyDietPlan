@@ -30,6 +30,8 @@ public class MyDietDAOImpl implements MyDietDAO {
 			if (connection == null) {
 				Class.forName("com.mysql.jdbc.Driver");
 				connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/test");
+				//connection = DriverManager.getConnection("jdbc:mysql://aa1wkuw3g4plunp.cwgf3i9nxgiq.ap-southeast-2.rds.amazonaws.com:3306/test", "root", "Capgemini123");
+				System.out.println();
 			}
 
 		} catch (Exception excep) {
@@ -62,7 +64,7 @@ public class MyDietDAOImpl implements MyDietDAO {
 				empDtlsBean.setStatus(rs.getString("Status"));
 			}
 
-			List<EmpDiteConsultation> ditCulsList = new ArrayList<>();
+			List<EmpDiteConsultation> ditCulsList = new ArrayList<EmpDiteConsultation>();
 			ResultSet rs2 = stmt.executeQuery("select * from EMP_CONSULT_DETAILS where Emp_Id = '" + empId + "'");
 			while (rs2.next()) {
 				EmpDiteConsultation emConBean = new EmpDiteConsultation();
@@ -73,12 +75,13 @@ public class MyDietDAOImpl implements MyDietDAO {
 			}
 			empDtlsBean.setEmpDiteConsulDetails(ditCulsList);
 
-			List<EmpDietMenuBean> empMenuList = new ArrayList<>();
+			List<EmpDietMenuBean> empMenuList = new ArrayList<EmpDietMenuBean>();
 			ResultSet rs3 = stmt.executeQuery("select * from EMP_DIET_PLAN_DETAILS  where Emp_Id = '" + empId + "'");
 			while (rs3.next()) {
 				EmpDietMenuBean empMenuBean = new EmpDietMenuBean();
 				empMenuBean.setMeal1(rs3.getString("Meal1"));
 				empMenuBean.setMeal2(rs3.getString("Meal2"));
+				empMenuBean.setCost(Integer.parseInt(rs3.getString("Price")));
 				empMenuList.add(empMenuBean);
 			}
 			empDtlsBean.setEmpDietMenuList(empMenuList);
@@ -209,7 +212,7 @@ public class MyDietDAOImpl implements MyDietDAO {
 				stmt.execute(delQuery);
 				
 				for(EmpDietMenuBean empDtMen : dietMenuList) {
-					String query = "insert into EMP_DIET_PLAN_DETAILS() values ('"+empDtlsBean.getId()+"' , '"+empDtMen.getMeal1()+"', '"+empDtMen.getMeal2()+"', 90)";
+					String query = "insert into EMP_DIET_PLAN_DETAILS() values ('"+empDtlsBean.getId()+"' , '"+empDtMen.getMeal1()+"', '"+empDtMen.getMeal2()+"', 0)";
 					stmt.execute(query);	
 				}
 			}
@@ -247,8 +250,10 @@ public class MyDietDAOImpl implements MyDietDAO {
 			
 			
 			if(null != dietMenuList && !dietMenuList.isEmpty()) {
+				
 				for(EmpDietMenuBean empDtMen : dietMenuList) {
-					String query = "update EMP_DIET_PLAN_DETAILS set Price=100 where Emp_Id='" + empDtMen.getEmpId() +"'";
+					String query = "update EMP_DIET_PLAN_DETAILS set Price="+ empDtMen.getCost() +" where Emp_Id='" + empDtMen.getEmpId() +"' and Meal1='" + empDtMen.getMeal1() +"' and Meal2 = '" + empDtMen.getMeal2() +"'";
+					//String query = "update EMP_DIET_PLAN_DETAILS set Price="+ empDtMen.getCost() +" where Emp_Id='" + empDtMen.getEmpId() +"'   & ";
 					stmt.execute(query);	
 				}
 			}
