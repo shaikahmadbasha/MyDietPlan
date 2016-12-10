@@ -53,7 +53,7 @@ public class MyDietDAOImpl implements MyDietDAO {
 				empDtlsBean.setName(rs.getString("Name"));
 				empDtlsBean.setEmail(rs.getString("Email_Id"));
 
-				empDtlsBean.setContactNum(rs.getInt("Contact_No"));
+				empDtlsBean.setContactNum(rs.getString("Contact_No") + "");
 				empDtlsBean.setGender(rs.getString("Gender"));
 				empDtlsBean.setAge(rs.getInt("Age"));
 				empDtlsBean.setHeight(rs.getInt("Height"));
@@ -106,6 +106,45 @@ public class MyDietDAOImpl implements MyDietDAO {
 		 */
 		return empDtlsBean;
 	}
+	
+	@Override
+	public List<EmployeeDetailsBean> getPendingEmployeeDetails() {
+
+		List<EmployeeDetailsBean> empDtlsBeanList = new ArrayList<EmployeeDetailsBean>();
+
+		try {
+			createConnection();
+			Statement stmt = connection.createStatement();
+			ResultSet rs = stmt.executeQuery("select * from EMP_PERSONAL_DETAILS");
+			System.out.println("*******************************rs called 5 ");
+
+			while (rs.next()) {
+				EmployeeDetailsBean empDtlsBean = new EmployeeDetailsBean();
+				empDtlsBean.setId(rs.getString("Emp_Id"));
+				empDtlsBean.setName(rs.getString("Name"));
+				empDtlsBean.setEmail(rs.getString("Email_Id"));
+
+				empDtlsBean.setContactNum(rs.getString("Contact_No") + "");
+				empDtlsBean.setGender(rs.getString("Gender"));
+				empDtlsBean.setAge(rs.getInt("Age"));
+				empDtlsBean.setHeight(rs.getInt("Height"));
+				empDtlsBean.setWeight(rs.getInt("WEIGHT"));
+				empDtlsBean.setDailyAct(rs.getString("Daily_Activities"));
+				empDtlsBean.setStatus(rs.getString("Status"));
+				empDtlsBeanList.add(empDtlsBean);
+			}
+
+			
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		} finally {
+
+		}
+
+
+		return empDtlsBeanList;
+	}
 
 	@Override
 	public boolean updateEmpDetails(EmployeeDetailsBean empDtlsBean) {
@@ -117,12 +156,12 @@ public class MyDietDAOImpl implements MyDietDAO {
 			stmt = connection.createStatement();
 
 			String query = "INSERT INTO EMP_PERSONAL_DETAILS () VALUES('" + empDtlsBean.getId() + "', '"
-					+ empDtlsBean.getName() + "', '" + empDtlsBean.getEmail() + "', " + empDtlsBean.getContactNum()
-					+ ", '" + empDtlsBean.getGender() + "', " + empDtlsBean.getAge() + ", " + empDtlsBean.getHeight()
+					+ empDtlsBean.getName() + "', '" + empDtlsBean.getEmail() + "', '" + empDtlsBean.getContactNum()
+					+ "' , '" + empDtlsBean.getGender() + "', " + empDtlsBean.getAge() + ", " + empDtlsBean.getHeight()
 					+ ", " + empDtlsBean.getWeight() + ", '" + empDtlsBean.getDailyAct() + "', '', '', '"
 					+ empDtlsBean.getStatus() + "') ON DUPLICATE KEY UPDATE name='" + empDtlsBean.getName()
-					+ "', Email_Id='" + empDtlsBean.getEmail() + "', Contact_No=" + empDtlsBean.getContactNum()
-					+ ", Age=" + empDtlsBean.getAge() + ", WEIGHT=" + empDtlsBean.getWeight() + ", Daily_Activities='"
+					+ "', Email_Id='" + empDtlsBean.getEmail() + "', Contact_No='" + empDtlsBean.getContactNum()
+					+ "', Age=" + empDtlsBean.getAge() + ", WEIGHT=" + empDtlsBean.getWeight() + ", Daily_Activities='"
 					+ empDtlsBean.getDailyAct() + "',Status = '" + empDtlsBean.getStatus() + "' ";
 
 			stmt.execute(query);
@@ -144,4 +183,92 @@ public class MyDietDAOImpl implements MyDietDAO {
 		return successs;
 	}
 
+	@Override
+	public boolean updateDietDetails(EmployeeDetailsBean empDtlsBean) {
+
+		Statement stmt = null;
+		boolean successs = false;
+
+		try {
+			createConnection();
+			
+			stmt = connection.createStatement();
+			
+			List<EmpDiteConsultation> dietConsList = empDtlsBean.getEmpDiteConsulDetails();
+			
+			if(null != dietConsList && !dietConsList.isEmpty()) {
+				EmpDiteConsultation dietConsBean = dietConsList.get(0);
+				String query = "insert into EMP_CONSULT_DETAILS() values ('"+empDtlsBean.getId()+"', '"+dietConsBean.getDate()+"', '"+dietConsBean.getDietitionName()+"', '"+dietConsBean.getDetails()+"')";
+				stmt.execute(query);
+			}
+			
+			
+			List<EmpDietMenuBean> dietMenuList = empDtlsBean.getEmpDietMenuList();
+			if(null != dietMenuList && !dietMenuList.isEmpty()) {
+				String delQuery = "delete from EMP_DIET_PLAN_DETAILS where Emp_Id='" + empDtlsBean.getId() +"'";
+				stmt.execute(delQuery);
+				
+				for(EmpDietMenuBean empDtMen : dietMenuList) {
+					String query = "insert into EMP_DIET_PLAN_DETAILS() values ('"+empDtlsBean.getId()+"' , '"+empDtMen.getMeal1()+"', '"+empDtMen.getMeal2()+"', 90)";
+					stmt.execute(query);	
+				}
+			}
+
+			successs = true;
+			System.out.println("******Employee Diet Details inserted");
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (Exception ex) {
+
+			}
+		}
+
+		return successs;
+	
+	}
+	
+	
+	@Override
+	public boolean updateDietCost(List<EmpDietMenuBean> dietMenuList) {
+
+		Statement stmt = null;
+		boolean successs = false;
+
+		try {
+			createConnection();
+			
+			stmt = connection.createStatement();
+			
+			
+			if(null != dietMenuList && !dietMenuList.isEmpty()) {
+				for(EmpDietMenuBean empDtMen : dietMenuList) {
+					String query = "update EMP_DIET_PLAN_DETAILS set Price=100 where Emp_Id='" + empDtMen.getEmpId() +"'";
+					stmt.execute(query);	
+				}
+			}
+
+			successs = true;
+			System.out.println("******Employee cost Details inserted");
+
+		} catch (Exception excep) {
+			excep.printStackTrace();
+		} finally {
+			try {
+				if (stmt != null) {
+					stmt.close();
+				}
+			} catch (Exception ex) {
+
+			}
+		}
+
+		return successs;
+	
+	}
 }

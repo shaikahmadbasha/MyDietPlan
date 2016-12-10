@@ -11,6 +11,9 @@ public class EmpDietMenuBean extends BaseBean {
 	private String meal1;
 	private String meal2;
 	private String meal3;
+	private String empId;
+	private int cost;
+	
 	/**
 	 * @return the meal1
 	 */
@@ -47,8 +50,30 @@ public class EmpDietMenuBean extends BaseBean {
 	public void setMeal3(String meal3) {
 		this.meal3 = meal3;
 	}
-	
-	
+	/**
+	 * @return the empId
+	 */
+	public String getEmpId() {
+		return empId;
+	}
+	/**
+	 * @param empId the empId to set
+	 */
+	public void setEmpId(String empId) {
+		this.empId = empId;
+	}
+	/**
+	 * @return the cost
+	 */
+	public int getCost() {
+		return cost;
+	}
+	/**
+	 * @param cost the cost to set
+	 */
+	public void setCost(int cost) {
+		this.cost = cost;
+	}
 	
 	
 }

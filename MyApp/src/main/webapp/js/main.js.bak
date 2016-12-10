@@ -1,0 +1,164 @@
+;(function () {
+	
+	'use strict';
+
+
+
+	// iPad and iPod detection	
+	var isiPad = function(){
+		return (navigator.platform.indexOf("iPad") != -1);
+	};
+
+	var isiPhone = function(){
+	    return (
+			(navigator.platform.indexOf("iPhone") != -1) || 
+			(navigator.platform.indexOf("iPod") != -1)
+	    );
+	};
+
+	
+
+
+   [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {  
+      new SelectFx(el);
+   } );
+
+	
+
+
+	// Offcanvas and cloning of the main menu
+	var offcanvas = function() {
+
+		var $clone = $('#pmd-menu-wrap').clone();
+		$clone.attr({
+			'id' : 'offcanvas-menu'
+		});
+		$clone.find('> ul').attr({
+			'class' : '',
+			'id' : ''
+		});
+
+		$('#pmd-page').prepend($clone);
+
+		// click the burger
+		$('.js-pmd-nav-toggle').on('click', function(){
+
+			if ( $('body').hasClass('pmd-offcanvas') ) {
+				$('body').removeClass('pmd-offcanvas');
+			} else {
+				$('body').addClass('pmd-offcanvas');
+			}
+			// event.preventDefault();
+
+		});
+
+		$('#offcanvas-menu').css('height', $(window).height());
+
+		$(window).resize(function(){
+			var w = $(window);
+
+
+			$('#offcanvas-menu').css('height', w.height());
+
+			if ( w.width() > 769 ) {
+				if ( $('body').hasClass('pmd-offcanvas') ) {
+					$('body').removeClass('pmd-offcanvas');
+				}
+			}
+
+		});	
+
+	}
+
+	
+
+	// Click outside of the Mobile Menu
+	var mobileMenuOutsideClick = function() {
+		$(document).click(function (e) {
+	    var container = $("#offcanvas-menu, .js-pmd-nav-toggle");
+	    if (!container.is(e.target) && container.has(e.target).length === 0) {
+	      if ( $('body').hasClass('pmd-offcanvas') ) {
+				$('body').removeClass('pmd-offcanvas');
+			}
+	    }
+		});
+	};
+
+
+	 
+
+	// Document on load.
+	$(function(){
+		offcanvas();
+		mobileMenuOutsideClick();
+	});
+
+
+	var context_path = "";
+	//Login form submit
+	$('#employeeLogin').submit(function (e){
+		e.preventDefault();
+
+		var employeeID = $('employeeID').val();
+
+		var uri = context_path + 'MyDitePlan/getEmployeeDetails.do?id='+employeeID;
+
+		/*$.ajax(uri, {
+		  success: function(data) {
+			 $('#main').html($(data).find('#main *'));
+			 $('#notification-bar').text('The page has been successfully loaded');
+		  },
+		  error: function() {
+			 
+		  }
+	   });*/
+
+	   var result = {
+			  "id": "57874",
+			  "name": "Ahmad Basha",
+			  "height": 120,
+			  "weight": 70,
+			  "gender": "male",
+			  "contactNum": 2147483647,
+			  "email": "ahmad-basha.shaik@capgemini.com",
+			  "status": "Ditetion is Reviewing your case",
+			  "userId": null,
+			  "age": 34,
+			  "dailyAct": "Eat-Sleep",
+			  "empDiteConsulDetails": [
+				{
+				  "date": "10/12/2016",
+				  "dietitionName": "Vishal",
+				  "details": "Calorie Intake is 2000 KCal per day."
+				}
+			  ],
+			  "empDietMenuList": [
+				{
+				  "meal1": "50 gr Sprouts, Bread Omlet",
+				  "meal2": "3 Roties, 100 gr Rice",
+				  "meal3": null
+				},
+				{
+				  "meal1": "50 gr Maggie",
+				  "meal2": "3 Roties, 100 gr Rice",
+				  "meal3": null
+				}
+			  ]
+			};
+
+			$('#index').hide();
+			
+			$('#fname').val(result.name);
+			$('#phone-no').val(result.contactNum);
+			$('#email').val(result.email);
+			$('#age').val(result.age);
+			$('#weight').val(result.weight);
+			$('#height').val(result.height);
+			$('#activity').val(result.dailyAct);
+			$('#gender').val(result.gender);
+
+			$('#emp-form').removeClass('hidden');
+	});
+
+
+}());

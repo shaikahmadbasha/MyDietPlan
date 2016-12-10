@@ -16,8 +16,8 @@ import com.diet.dao.MyDietDAOImpl;
  * @author learning
  *
  */
-@Component("employeeDetailsProcessor")
-public class EmployeeDetailsProcessor extends BaseProcessor {
+@Component("getEmployeeDetailsProcessor")
+public class GetEmployeeDetailsProcessor extends BaseProcessor {
 
 	@Autowired
 	private MyDietDAOImpl myDietDAOImpl;
@@ -30,8 +30,8 @@ public class EmployeeDetailsProcessor extends BaseProcessor {
 		EmployeeDetailsBean empDtlsBean = null;
 
 		try {
-			String empId = (String) jsonRequest;
-			empDtlsBean = myDietDAOImpl.getEmployeeDetails(empId);
+			EmployeeDetailsBean employeeDetailsBean = (EmployeeDetailsBean)jsonRequest;
+			empDtlsBean = myDietDAOImpl.getEmployeeDetails(employeeDetailsBean.getId());
 
 		} catch (Exception excep) {
 			excep.printStackTrace();

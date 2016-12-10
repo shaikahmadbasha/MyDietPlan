@@ -17,7 +17,7 @@ public class EmployeeDetailsBean extends BaseBean {
 	private int height;
 	private int weight;
 	private String gender;
-	private int contactNum;
+	private String contactNum;
 	private String email;
 	private String status;
 	private String userId;
@@ -102,20 +102,7 @@ public class EmployeeDetailsBean extends BaseBean {
 		this.gender = gender;
 	}
 
-	/**
-	 * @return the contactNum
-	 */
-	public int getContactNum() {
-		return contactNum;
-	}
 
-	/**
-	 * @param contactNum
-	 *            the contactNum to set
-	 */
-	public void setContactNum(int contactNum) {
-		this.contactNum = contactNum;
-	}
 
 	/**
 	 * @return the email
@@ -218,6 +205,19 @@ public class EmployeeDetailsBean extends BaseBean {
 		this.empDietMenuList = empDietMenuList;
 	}
 
+	/**
+	 * @return the contactNum
+	 */
+	public String getContactNum() {
+		return contactNum;
+	}
+
+	/**
+	 * @param contactNum the contactNum to set
+	 */
+	public void setContactNum(String contactNum) {
+		this.contactNum = contactNum;
+	}
 
 
 }
